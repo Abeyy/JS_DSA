@@ -123,4 +123,5 @@ setD.add("d");
 // Returns an "object Set Iterator to iterate over"
 console.log(setD.values())
 setD.delete("a");
-console.log(setD.has("a")); //false
+console.log(setD.has("a")); // false
+console.log(setD.add("d")); // returns the set itself, not true or false.
