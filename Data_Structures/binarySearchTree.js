@@ -1,9 +1,9 @@
 // Binary Search Tree (BST)
 
 /* A tree data structure is a way to hold data, that when visualized looks like
-   a tree in nature. 
-   
-   NODES: All data points in the tree are called nodes.  
+   a tree in nature.
+
+   NODES: All data points in the tree are called nodes.
    ROOT NODE: First data point in the tree.
    PARENT: Nodes with children.
    SIBLINGS: Nodes with the same parent.
@@ -11,25 +11,25 @@
    MIN HEIGHT: Distance from root node to first node without two children
    MAX HEIGHT: Distance from root node to the most bottom node
    BALANCED: If the difference between min height and max height are at most 1.
-   
+
    Traversal Methods:
-   inOrder Traversal, preOrder Traversal, postOrder Traversal, and levelOrder traversal. 
-   
+   inOrder Traversal, preOrder Traversal, postOrder Traversal, and levelOrder traversal.
+
    inOrder Traversal: start at the left most node, and go to the right (all numbers in order)
-   preOrder Traversal: explore root nodes before the leaves 
+   preOrder Traversal: explore root nodes before the leaves
    postOrder Traversal: explores the leave nodes before the root nodes
    levelOrder Traversal: (Breadth First Search) Goes through each level (horizontally)
 */
 
-/* A Binary Tree can only have TWO branches for each node. Binary search 
+/* A Binary Tree can only have TWO branches for each node. Binary search
    trees are also ordered. Each left subtree is less than or equal to its parent,
    and each right subtree is greater than or equal to its parent.
-   
+
    Because they are sorted, on average operations are able to skip half of the
    tree. Each lookup, insertion, or delete is Olog(n)
-   
+
    Its faster than array, but slower than a hash table.
-*/  
+*/
 
 // BINARY SEARCH TREE:
 
@@ -45,7 +45,7 @@ class BST {
   constructor () {
     this.root = null;
   }
-  
+
   add (data) {
     const node = this.root;
     if (node === null) {
@@ -74,36 +74,36 @@ class BST {
       return searchTree(node);
     }
   }
-  
+
   findMin () {
     let current = this.root;
     while (current.left !== null) {
       current = current.left;
     }
-    
+
     return current.data;
   }
-  
+
   findMax () {
     let current = this.root;
     while (current.right !== null) {
       current = current.right;
     }
-    
+
     return current.data;
   }
-  
+
   find (data) {
     let current = this.root;
-    
+
     while (current) {
-      
+
     }
   }
-  
+
   isPresent (data) {
     let current = this.root;
-    
+
     while (current) {
       if (data === current.data) {
         return true;
@@ -116,7 +116,7 @@ class BST {
     }
     return false;
   }
-  
+
   remove (data) {
     const removeNode = function (node, data) {
       if (node === null) {
@@ -127,17 +127,17 @@ class BST {
         if (node.left == null && node.right == null) {
           node.null;
         }
-        
+
         // node has no left child
         if (node.left == null) {
           return node.right;
         }
-        
+
         // node has no right child
         if (node.right == null) {
           return node.left
         }
-        
+
         // node has two children
         var tempNode = node.right
         while (tempNode.left !== null) {
@@ -155,11 +155,11 @@ class BST {
     }
     this.root = removeNode(this.root, data);
   }
-  
+
   isBalanced() {
     return (this.findMinHeight() >= this.findMaxHeight() -1)
   }
-  
+
   findMinHeight (node = this.root) {
     if (node === null) {
       // Height is -1 if binary tree is empty
@@ -167,29 +167,29 @@ class BST {
     };
     let left = this.findMinHeight(node.left);
     let right = this.findMinHeight(node.right);
-    
+
     if (left < right) {
       return left + 1;
     } else {
       return right + 1;
     };
   }
-  
+
   findMaxHeight (node = this.root) {
     if (node === null) {
       return -1
     };
-    
+
     let left = this.findMaxHeight(node.left);
     let right = this.findMaxHeight(node.right);
-    
+
     if (left > right) {
       return left + 1;
     } else {
       return right + 1;
     };
   }
-  
+
   inOrder () {
     if (this.root === null) {
       return null;
@@ -203,5 +203,56 @@ class BST {
       traverseInOrder(this.root);
       return result;
     };
+  }
+
+  preOrder () {
+    if (this.root === null) {
+      return null;
+    } else {
+      var result = new Array();
+      function: traversePreOrder(node) {
+        result.push(node.data);
+        node.left && traversePreOrder(node.left);
+        node.right && traversePreOrder(node.right);
+      }
+      traversePreOrder(this.root)
+      return result;
+    }
+  }
+
+  postOrder () {
+    if (this.root === null) {
+      return null;
+    } else {
+      var result = new Array();
+      function traversePostOrder(node) {
+        node.left && traversePostOrder(node.left)
+        node.right && traversePostOrder(node.right)
+        result.push(node.data)
+      }
+      traversePostOrder(this.root)
+      return result
+    }
+  }
+
+  levelOrder  () {
+    let result = [];
+    let Q = [];
+    if (this.root !== null) {
+      Q.push(this.root);
+      while (Q.length > 0) {
+        let node = Q.shift();
+        result.push(node.data);
+        if (node.left !== null) {
+          Q.push(node.left)
+        };
+        if (node.right !== null) {
+          Q.push(node.right)
+        }
+      }
+      return result;
+    } else {
+      return null
+    }
   }
 }
